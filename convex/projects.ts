@@ -142,6 +142,23 @@ export const update = mutation({
   },
 });
 
+export const generateMoodboardUploadUrl = mutation({
+  args: {},
+  handler: async (ctx) => {
+    await requireUserId(ctx);
+    return await ctx.storage.generateUploadUrl();
+  },
+});
+
+export const resolveMoodboardImage = query({
+  args: {
+    storageId: v.string(),
+  },
+  handler: async (ctx, { storageId }) => {
+    await requireUserId(ctx);
+    return await ctx.storage.getUrl(storageId);
+  },
+});
 export const remove = mutation({
   args: {
     id: v.id("projects"),
