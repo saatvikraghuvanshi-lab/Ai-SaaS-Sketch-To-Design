@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useMemo, useState } from "react";
 import { useQuery } from "convex/react";
-import { ArrowRight, FileText, LogOut, Plus, Search } from "lucide-react";
+import { ArrowRight, FileText, LogOut, Plus, Search, SwatchBook } from "lucide-react";
 import { toast } from "sonner";
 
 import { api } from "@/convex/_generated/api";
@@ -236,7 +236,7 @@ export function DashboardPage() {
               </p>
               <div className="mt-5 flex items-center justify-between border-t border-border pt-3 text-xs text-muted-foreground">
                 <span>{formatDate(project.lastModified)}</span>
-                <span>{project.moodBoardImages?.length ?? 0} references</span>
+                <span className="inline-flex items-center gap-1"><SwatchBook className="size-3" />{project.moodBoardImages?.length ?? 0} refs</span>
               </div>
             </Link>
           ))}

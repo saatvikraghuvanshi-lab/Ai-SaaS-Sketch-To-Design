@@ -1,4 +1,4 @@
-﻿# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
 /node_modules
@@ -42,4 +42,8 @@ next-env.d.ts
 
 # local dev server logs
 next-dev.*.log
+# generated build-check output
+/.next-build/
 
+# local ngrok tunnel logs
+ngrok.log
