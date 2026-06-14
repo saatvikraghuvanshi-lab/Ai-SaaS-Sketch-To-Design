@@ -62,6 +62,17 @@ import { Rectangle } from "@/components/shapes/rectangle";
 import { Stroke } from "@/components/shapes/stroke";
 import { Text } from "@/components/shapes/text";
 import { MoodBoardImage } from "@/components/style/mood-board/images.board";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -2193,14 +2204,31 @@ export function ProjectEditorPage() {
                     </div>
                   </div>
                 )}
-                <Button
-                  variant="destructive"
-                  className="col-span-2 mt-1 h-8"
-                  onClick={() => dispatch(removeShape(selectedShape.id))}
-                >
-                  <Trash2 className="size-4" />
-                  Delete selection
-                </Button>
+                <AlertDialog>
+                  <AlertDialogTrigger asChild>
+                    <Button variant="destructive" className="col-span-2 mt-1 h-8">
+                      <Trash2 className="size-4" />
+                      Delete selection
+                    </Button>
+                  </AlertDialogTrigger>
+                  <AlertDialogContent>
+                    <AlertDialogHeader>
+                      <AlertDialogTitle>Delete selected layer?</AlertDialogTitle>
+                      <AlertDialogDescription>
+                        This removes the selected frame, shape, text, or generated screen from the canvas.
+                      </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter>
+                      <AlertDialogCancel>Cancel</AlertDialogCancel>
+                      <AlertDialogAction
+                        className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+                        onClick={() => dispatch(removeShape(selectedShape.id))}
+                      >
+                        Delete
+                      </AlertDialogAction>
+                    </AlertDialogFooter>
+                  </AlertDialogContent>
+                </AlertDialog>
               </div>
             ) : (
               <p className="mt-4 text-sm leading-5 text-muted-foreground">Select a shape to edit position, size, or text.</p>
@@ -2249,14 +2277,34 @@ export function ProjectEditorPage() {
             <div className="mb-2 flex items-center justify-between gap-2">
               <p className="text-xs text-muted-foreground">Inspiration Board</p>
               {inspirationImages.length > 0 ? (
-                <button
-                  type="button"
-                  className="text-xs text-muted-foreground hover:text-foreground"
-                  onClick={() => void clearAllInspirationImages()}
-                  suppressHydrationWarning
-                >
-                  Clear all
-                </button>
+                <AlertDialog>
+                  <AlertDialogTrigger asChild>
+                    <button
+                      type="button"
+                      className="text-xs text-muted-foreground hover:text-foreground"
+                      suppressHydrationWarning
+                    >
+                      Clear all
+                    </button>
+                  </AlertDialogTrigger>
+                  <AlertDialogContent>
+                    <AlertDialogHeader>
+                      <AlertDialogTitle>Clear inspiration board?</AlertDialogTitle>
+                      <AlertDialogDescription>
+                        This removes all inspiration images from the current project generation panel.
+                      </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter>
+                      <AlertDialogCancel>Cancel</AlertDialogCancel>
+                      <AlertDialogAction
+                        className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+                        onClick={() => void clearAllInspirationImages()}
+                      >
+                        Clear images
+                      </AlertDialogAction>
+                    </AlertDialogFooter>
+                  </AlertDialogContent>
+                </AlertDialog>
               ) : null}
             </div>
             <input
@@ -2349,8 +2397,8 @@ export function ProjectEditorPage() {
             </div>
             <label className="mt-4 block space-y-2 text-xs text-muted-foreground">
               Prompt Input
-              <textarea
-                className="min-h-16 w-full resize-y rounded-md border border-border bg-background p-3 text-sm text-foreground outline-none placeholder:text-muted-foreground"
+              <Textarea
+                className="min-h-16 resize-y"
                 placeholder="Describe the desired aesthetic, component style, and color palette..."
                 value={generationPrompt}
                 onChange={(event) => setGenerationPrompt(event.target.value)}
